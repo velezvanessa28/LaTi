@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="static/css/base.css">
+
+
+</head>
+
+
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+    <section id="hero" class="d-flex align-items-center">
+        <div class="container text-center">
+            <h1>Bienvenido a LaTi</h1>
+            <p>En esta aplicacion podras manejar el inventario de tu tienda</p>
+            <p> y tambien las facturas de compra y venta que realices</p>
+            
+            </p>
+            <h2></h2>
+            {% if user.is_authenticated %}
+                <a href="{% url 'inventario' user.id%}" class="btn_get_started">Inventario</a>
+                <a href="{% url 'facturaV' %}" class="btn_get_started">Factura ventas</a>
+                <a href="{% url 'facturaC' %}" class="btn_get_started">Factura compras</a>
+            {% else %}
+                <a href="registro" class="btn_get_started">Registrate</a>
+                <a href="login" class="btn_get_started">Inicia sesión</a>
+            {% endif %}
+                
+        </div>
+
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    {% endblock content%}
+</body>
+</html>

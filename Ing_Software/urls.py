@@ -15,7 +15,29 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from lati import views as appViews
+from django.contrib.auth.views import LoginView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', appViews.home, name='home'),
+    path('facturasVentas/', appViews.facturaV, name='facturaV'),
+    path('facturasCompras/', appViews.facturaC, name='facturaC'),
+    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
+    path('login/home/', appViews.home, name='home'),
+    path('registro/', appViews.register, name='register'),
+    path('logout/', appViews.logoutaccount, name='logoutaccount'),
+    
+    #path('usuario/<int:user_id>/categoria/', appViews.categoria, name='categoria'),
+    #path('usuario/<int:user_id>/agregarCategoria' , appViews.agregarCategoria, name='agregarCategoria'),
+    
+    
+    path('usuario/<int:user_id>/inventario/', appViews.producto, name='inventario'),
+    path('usuario/<int:user_id>/agregarProducto' , appViews.agregarProducto, name='agregarProducto'),
+    path('usuario/<int:user_id>/actualizarProducto/<int:producto_idProducto>' , appViews.actualizarProducto, name='actualizarProducto'),
+    path('usuario/<int:user_id>/eliminarProducto/<int:producto_idProducto>' , appViews.eliminarProducto, name='eliminarProducto'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

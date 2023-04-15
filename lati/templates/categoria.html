@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!--Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="static/css/base.css">
+
+
+</head>
+
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+    {% if user.is_authenticated %}
+    
+    
+    <hr>
+    <h3>Categorias</h3>
+    <div class="row row-cols-1 row-cols-md-3 g-4"> 
+        {% for Categoria in categorias %}
+        {% if user.is_authenticated and user == categoria.user %}
+        <div v-for="Categoria in categorias" class="col"> 
+            <div class="card-body"> 
+                <p class="card-text">Id categoria: {{ categoria.idCategoria }}</p>
+                <p class="card-text">Nombre: {{ categoria.nombreC }}</p>
+            </div>
+        </div>
+            
+        {% else %}
+            <h1>Acceso denegado</h1>
+
+        </div>       
+        {% endif %}
+        {% endfor %}
+        <div>
+            <br> <center><a href="{% url 'agregarCategoria' user.id %}"class="btn btn-primary">Agregar Categoria</a></div></center>   
+            {% endif %}
+    {% endblock content%}
+</body>
+</html>
