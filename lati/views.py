@@ -14,19 +14,16 @@ from django.urls import reverse
 def home(request):
     return render(request, 'home.html')
 
+'''Facturas'''
 def facturaV(request):
     return render(request, 'facturaVentas.html')
 
 def facturaC(request):
     return render(request, 'facturaCompras.html')
-
-def inventario(request, user_id):
-    user = get_object_or_404(User,pk=user_id)
-
-        
-    return render(request, 'inventario.html')
+'''Facturas'''
 
 
+'''Accounts'''
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -48,7 +45,14 @@ def login(request):
 def logoutaccount(request):
     logout(request)
     return redirect('home')
+'''Accounts'''
 
+'''Productos'''
+def inventario(request, user_id):
+    user = get_object_or_404(User,pk=user_id)
+
+        
+    return render(request, 'inventario.html')
 def producto(request, user_id):
     user = get_object_or_404(User,pk=user_id)
     productos = Producto.objects.filter(user = user)     
@@ -91,6 +95,9 @@ def eliminarProducto(request,user_id, producto_idProducto):
     producto = get_object_or_404(Producto, pk=producto_idProducto,user=request.user)
     producto.delete()
     return redirect('../inventario/', producto.user.id)
+
+
+
 
 '''
 def categoria(request, user_id):

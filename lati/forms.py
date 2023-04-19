@@ -55,26 +55,3 @@ class ProductoForm(ModelForm):
         self.fields['precioUnit'].widget.attrs.update({'class': 'form-control'})
         self.fields['peso'].widget.attrs.update({'class': 'form-control'})
         self.fields['foto'].widget.attrs.update({'class': 'form-control-file'})
-
-        
-        
-'''class CategoriaForm(ModelForm):
-    class Meta:
-        model = Categoria
-        fields = ['idCategoria','nombreC']
-        labels = {
-            'idCategoria': 'ID del producto',
-            'nombreC': 'Nombre del producto',
-
-        }
-        widgets = {
-            'idCategoria': forms.TextInput(attrs={'class': 'form-control'}),
-            'nombreC': forms.TextInput(attrs={'class': 'form-control'}),
-
-        }
-    def __init__(self, *args, **kwargs):
-        super(ModelForm, self).__init__(*args,**kwargs)
-        self.fields['idCategoria'].widget.attrs.update({'class': 'form-control'})
-        self.fields['nombreC'].widget.attrs.update({'class': 'form-control'})
-        
-        '''
