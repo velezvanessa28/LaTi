@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from lati import views as appViews
+from cuentas import views as cuenViews
 from django.contrib.auth.views import LoginView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -27,8 +28,8 @@ urlpatterns = [
     path('facturasCompras/', appViews.facturaC, name='facturaC'),
     path('login/', LoginView.as_view(template_name='login.html'), name='login'),
     path('login/home/', appViews.home, name='home'),
-    path('registro/', appViews.register, name='register'),
-    path('logout/', appViews.logoutaccount, name='logoutaccount'),
+    path('registro/', cuenViews.register, name='register'),
+    path('logout/', cuenViews.logoutaccount, name='logoutaccount'),
     
     #path('usuario/<int:user_id>/categoria/', appViews.categoria, name='categoria'),
     #path('usuario/<int:user_id>/agregarCategoria' , appViews.agregarCategoria, name='agregarCategoria'),
