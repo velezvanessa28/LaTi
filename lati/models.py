@@ -25,7 +25,8 @@ class FacturaC(models.Model):
     costo =models.IntegerField()
     fecha = models.DateField()
     nombreProveedor = models.CharField(max_length=50)
-    
+    def __str__(self):
+        return "id Factura Compra: " +self.idFacturaC
     
     
 class FacturaV(models.Model):
@@ -34,3 +35,5 @@ class FacturaV(models.Model):
     total =models.IntegerField()
     estado = models.CharField(max_length=50)
     nombreCliente = models.CharField(max_length=50)
+    def __str__(self):
+        return "id Factura Venta: " + self.idFacturaV

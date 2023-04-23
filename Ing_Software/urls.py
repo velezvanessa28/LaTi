@@ -24,8 +24,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', appViews.home, name='home'),
-    path('facturasVentas/', appViews.facturaV, name='facturaV'),
-    path('facturasCompras/', appViews.facturaC, name='facturaC'),
     path('login/', LoginView.as_view(template_name='login.html'), name='login'),
     path('login/home/', appViews.home, name='home'),
     path('registro/', cuenViews.register, name='register'),
@@ -39,6 +37,13 @@ urlpatterns = [
     path('usuario/<int:user_id>/agregarProducto' , appViews.agregarProducto, name='agregarProducto'),
     path('usuario/<int:user_id>/actualizarProducto/<int:producto_idProducto>' , appViews.actualizarProducto, name='actualizarProducto'),
     path('usuario/<int:user_id>/eliminarProducto/<int:producto_idProducto>' , appViews.eliminarProducto, name='eliminarProducto'),
+    
+    path('usuario/<int:user_id>/agregarFacturaC/', appViews.agregarFacturaC,name='agregarFacturaC'),
+    path('usuario/<int:user_id>/agregarFacturaV/', appViews.agregarFacturaV,name='agregarFacturaV'),
+    
+    path('usuario/<int:user_id>/facturaC/', appViews.facturaC,name='facturaC'),
+    path('usuario/<int:user_id>/facturaV/', appViews.facturaV,name='facturaV'),
+    
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
