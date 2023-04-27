@@ -51,12 +51,13 @@ class FacturaV(ModelForm):
         
     class Meta:
         model = FacturaV
-        fields = ['idFacturaV','cantProduct','total','estado','nombreCliente']
+        fields = ['idFacturaV','cantProduct','total','estado','nombreCliente','debe','cuanto']
         labels = {'idFacturaV': 'ID Factura',
             'cantProduct': 'Cantidad del producto',
             'total': 'Precio total factura',
             'estado': 'Estado de la factura',
             'nombreCliente': 'Nombre del Cliente',
+            'debe':'¿El cliente debe?',
         }
         
         widgets = {

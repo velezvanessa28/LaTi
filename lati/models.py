@@ -35,5 +35,7 @@ class FacturaV(models.Model):
     total =models.IntegerField()
     estado = models.CharField(max_length=50)
     nombreCliente = models.CharField(max_length=50)
+    debe=models.BooleanField(default=False)
+    cuanto=models.IntegerField(null=True)
     def __str__(self):
         return "id Factura Venta: " + self.idFacturaV
