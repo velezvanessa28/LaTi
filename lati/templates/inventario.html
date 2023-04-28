@@ -33,7 +33,7 @@
                     <p class="card-text">Precio: {{ producto.precioUnit }}</p> 
                     <img class="card-img-top" src="{{ producto.image.url }}" /> 
                     <p class="card-text">Peso: {{ producto.peso }}</p>
-                
+
                     <a class="btn btn-primary me-2" href="{% url 'actualizarProducto' user.id producto.idProducto %}">Actualizar</a>
                     <a class="btn btn-danger" href="{% url 'eliminarProducto' user.id producto.idProducto %}">Eliminar</a>
                 </div>

@@ -6,53 +6,70 @@ from .models import *
 
 
 
-from .forms import ProductoForm ,FacturaV
-from .forms import FacturaC
+from .forms import ProductoForm ,FacturaVForm
+from .forms import FacturaCForm
 from django.urls import reverse
 
 # Create your views here.
 def home(request):
     return render(request, 'home.html')
 
-'''Facturas'''
+'''Facturas Venta'''
 def facturaV(request, user_id):
-    return render(request,'facturaVentas.html')
+    user = get_object_or_404(User,pk=user_id)
+    facturasV = FacturaV.objects.all()
+    return render(request,'facturaVentas.html',{'facturasV':facturasV})
 
 def agregarFacturaV(request, user_id):
     user = get_object_or_404(User,pk=user_id)
+
     if request.method == 'GET':
-        return render(request, 'crearFacturaV.html',{'form':FacturaV(), 'user':user})
+        return render(request, 'crearFacturaV.html',{'form':FacturaVForm()})
     else:
         try:
-            form = FacturaV(request.POST)
+            form = FacturaVForm(request.POST)
             newFacturaV = form.save(commit=False)
             newFacturaV.user = request.user
+            newFacturaV.user = user
             newFacturaV.save()
             return redirect('facturaV',newFacturaV.user.id)
         except ValueError:
-            return render(request,'crearFacturaV.html',user_id,{'form':FacturaV(),'error':'bad datapassed in'})
+            return render(request,'crearFacturaV.html',{'form':FacturaVForm(),'error':'bad datapassed in'})
+
+def actualizarFacturaV(request,user_id, facturaV_idFacturaV):
+    pass
+
+def eliminarFacturaV(request,user_id, facturaV_idFacturaV):
+    pass
 
 
 
-
-'''Facturas'''
+'''Facturas Compra'''
 def facturaC(request,user_id):
-    return render(request,'facturaCompras.html')
+    user = get_object_or_404(User,pk=user_id)
+    facturasC = FacturaC.objects.all()
+    return render(request,'facturaCompras.html',{'facturasC':facturasC})
 
 def agregarFacturaC(request, user_id):
     user = get_object_or_404(User,pk=user_id)
     if request.method == 'GET':
-        return render(request, 'crearFacturaC.html',{'form':FacturaC(), 'user':user})
+        return render(request, 'crearFacturaC.html',{'form':FacturaCForm(), 'user':user})
     else:
         try:
-            form = FacturaC(request.POST)
+            form = FacturaCForm(request.POST)
             newFacturaC = form.save(commit=False)
-            newFacturaC.user = request.user       
+            newFacturaC.user = request.user 
+            newFacturaC.user = user      
             newFacturaC.save()
             return redirect('facturaC',newFacturaC.user.id)
         except ValueError:
-            return render(request,'crearFacturaC.html',user_id,{'form':FacturaC(),'error':'bad datapassed in'})
+            return render(request,'crearFacturaC.html',{'form':FacturaCForm(),'error':'bad datapassed in'})
+        
+def actualizarFacturaC(request,user_id, facturaC_idFacturaC):
+    pass
 
+def eliminarFacturaC(request,user_id, facturaC_idFacturaC):
+    pass
 
 '''Productos'''
 def inventario(request, user_id):

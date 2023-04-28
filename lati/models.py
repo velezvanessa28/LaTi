@@ -20,22 +20,25 @@ class Producto(models.Model):
     
 
 class FacturaC(models.Model):
-    idFacturaC = models.CharField(primary_key=True, max_length=25)
+    idFacturaC = models.IntegerField(primary_key=True)
     cantProduct = models.IntegerField()
     costo =models.IntegerField()
-    fecha = models.DateField()
+    fecha = models.CharField(max_length=20)
     nombreProveedor = models.CharField(max_length=50)
+    
     def __str__(self):
         return "id Factura Compra: " +self.idFacturaC
-    
+
     
 class FacturaV(models.Model):
-    idFacturaV = models.CharField(primary_key=True, max_length=25)
+    idFacturaV = models.IntegerField(primary_key=True)
     cantProduct = models.IntegerField()
-    total =models.IntegerField()
+    totall =models.IntegerField()
     estado = models.CharField(max_length=50)
     nombreCliente = models.CharField(max_length=50)
-    debe=models.BooleanField(default=False)
+    debe=models.BooleanField(default=False, null=True)
     cuanto=models.IntegerField(null=True)
+    
     def __str__(self):
         return "id Factura Venta: " + self.idFacturaV
+    

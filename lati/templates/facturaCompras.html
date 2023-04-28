@@ -22,6 +22,19 @@
             <h2></h2>
             {% if user.is_authenticated %}
                 <a href="{% url 'agregarFacturaC' user.id %}"class="btn btn-primary">Agregar Factura Compra</a>
+                {% for facturaC in facturasC %}
+            <div v-for="facturaC in facturasC" class="col"> 
+                <div class="card-body"> 
+                    <p class="card-text">Id producto: {{ facturaC.idFacturaC }} </p>
+                    <p class="card-text">Nombre: {{ facturaC.cantProduct }}</p>
+                    <p class="card-text">Descripción:{{ facturaC.costo}}</p>
+                    <p class="card-text">Cantidad: {{ facturaC.fecha}}</p> 
+                    <p class="card-text">Precio: {{ facturaC.nombreProveedor }}</p> 
+                    <a class="btn btn-primary me-2" href="{% url 'actualizarFacturaC' user.id facturaC.idFacturaC %}">Actualizar</a>
+                    <a class="btn btn-danger" href="{% url 'eliminarFacturaC' user.id facturaC.idFacturaC %}">Eliminar</a> 
+                </div>
+            </div>
+                {% endfor %}
             {% else %}
                 <a href="registro" class="btn_get_started">Iniciar</a>
             {% endif %} 

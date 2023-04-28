@@ -44,6 +44,11 @@ urlpatterns = [
     path('usuario/<int:user_id>/facturaC/', appViews.facturaC,name='facturaC'),
     path('usuario/<int:user_id>/facturaV/', appViews.facturaV,name='facturaV'),
     
+    path('usuario/<int:user_id>/facturaV/actualizar/<int:facturaV_idfacturaV>/', appViews.actualizarFacturaV,name='actualizarFacturaV'),
+    path('usuario/<int:user_id>/facturaV/eliminar/<int:facturaV_idfacturaV>/', appViews.eliminarFacturaV,name='eliminarFacturaV'),
+    
+    path('usuario/<int:user_id>/facturaC/actualizar/<int:facturaC_idfacturaC>/', appViews.actualizarFacturaC,name='actualizarFacturaC'),
+    path('usuario/<int:user_id>/facturaC/eliminar/<int:facturaC_idfacturaC>/', appViews.eliminarFacturaC,name='eliminarFacturaC'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

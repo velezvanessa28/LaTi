@@ -40,35 +40,40 @@ class ProductoForm(ModelForm):
         self.fields['peso'].widget.attrs.update({'class': 'form-control'})
         self.fields['foto'].widget.attrs.update({'class': 'form-control-file'})
         
-class FacturaV(ModelForm):
+class FacturaVForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(ModelForm, self).__init__(*args,**kwargs)
         self.fields['idFacturaV'].widget.attrs.update({'class': 'form-control'})
         self.fields['nombreCliente'].widget.attrs.update({'class': 'form-control'})
         self.fields['cantProduct'].widget.attrs.update({'class': 'form-control'})
-        self.fields['total'].widget.attrs.update({'class': 'form-control'})
+        self.fields['totall'].widget.attrs.update({'class': 'form-control'})
         self.fields['estado'].widget.attrs.update({'class': 'form-control'})
+        self.fields['debe'].widget.attrs.update({'class': 'form-check-input'})
+        self.fields['cuanto'].widget.attrs.update({'class': 'form-control'})
         
     class Meta:
         model = FacturaV
-        fields = ['idFacturaV','cantProduct','total','estado','nombreCliente','debe','cuanto']
+        fields = ['idFacturaV','cantProduct','totall','estado','nombreCliente','debe','cuanto']
         labels = {'idFacturaV': 'ID Factura',
             'cantProduct': 'Cantidad del producto',
-            'total': 'Precio total factura',
+            'totall': 'Precio totall factura',
             'estado': 'Estado de la factura',
             'nombreCliente': 'Nombre del Cliente',
             'debe':'¿El cliente debe?',
+            'cuanto':'¿Cuanto?'
         }
         
         widgets = {
-            'nombreCliente': forms.TextInput(attrs={'class': 'form-control'}),
+            'nombreCliente': forms.NumberInput(attrs={'class': 'form-control'}),
             'idFacturaV': forms.TextInput(attrs={'class': 'form-control'}),
-            'cantProduct': forms.TextInput(attrs={'class': 'form-control'}),
-            'total': forms.NumberInput(attrs={'class': 'form-control'}),
+            'cantProduct': forms.NumberInput(attrs={'class': 'form-control'}),
+            'totall': forms.NumberInput(attrs={'class': 'form-control'}),
             'estado': forms.TextInput(attrs={'class': 'form-control'}), 
+            'debe': forms.CheckboxInput(attrs={'class': 'form-check-input'}), 
+            'cuanto': forms.NumberInput(attrs={'class': 'form-control'}), 
         }
 
-class FacturaC(ModelForm):
+class FacturaCForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(ModelForm, self).__init__(*args,**kwargs)
         self.fields['idFacturaC'].widget.attrs.update({'class': 'form-control'})
@@ -84,12 +89,12 @@ class FacturaC(ModelForm):
         labels = {'idFacturaC': 'ID Factura',
             'cantProduct': 'Cantidad del producto',
             'costo': 'Precio total factura',
-            'fecha': 'Estado de la factura',
+            'fecha': 'Fecha de la factura',
             'nombreProveedor': 'Nombre del Cliente',
         }
         
         widgets = {
-            'idFacturaC': forms.TextInput(attrs={'class': 'form-control'}),
+            'idFacturaC': forms.NumberInput(attrs={'class': 'form-control'}),
             'cantProduct': forms.TextInput(attrs={'class': 'form-control'}),
             'costo': forms.NumberInput(attrs={'class': 'form-control'}),
             'fecha': forms.TextInput(attrs={'class': 'form-control'}), 
