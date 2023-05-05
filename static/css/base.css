@@ -32,7 +32,7 @@ section{
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
-
+    padding-left: 30px;
 }
 
 
@@ -96,3 +96,4 @@ section{
     background-color: #009970;
     border: 2px solid #009970;
 }
+

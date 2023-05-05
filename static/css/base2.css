@@ -32,6 +32,7 @@ section{
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    padding-left: 30px;
 
 }
 
@@ -97,3 +98,6 @@ section{
     border: 2px solid #009970;
 }
 
+#hero .card-body{
+    background-color: indianred;
+}
