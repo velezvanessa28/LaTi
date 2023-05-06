@@ -27,7 +27,7 @@ class FacturaC(models.Model):
     nombreProveedor = models.CharField(max_length=50)
     user =models.ForeignKey(User,on_delete=models.CASCADE)
     
-
+    
     
 class FacturaV(models.Model):
     idFacturaV = models.IntegerField(primary_key=True)

@@ -3,9 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from .models import *
-
-
-
+from datetime import datetime
+from django.db.models import Sum
 from .forms import ProductoForm ,FacturaVForm
 from .forms import FacturaCForm
 from django.urls import reverse
@@ -53,6 +52,21 @@ def eliminarFacturaV(request,user_id, facturaV_idFacturaV):
     facturaV = get_object_or_404(FacturaV, pk=facturaV_idFacturaV,user=request.user)
     facturaV.delete()
     return redirect('facturaV', facturaV.user.id)
+
+
+
+def buscarFacturaC(request):
+    if request.method == 'GET':
+        fecha = request.GET.get('fecha')
+        if fecha:
+            try:
+                fecha = datetime.strptime(fecha, '%d/%m/%Y').date()
+                facturas = FacturaC.objects.filter(fecha=fecha)
+            except ValueError:
+                facturas = FacturaC.objects.none()
+        else:
+            facturas = FacturaC.objects.all()
+        return render(request, 'facturaCompras.html', {'facturas': facturas})
 
 
 
@@ -134,6 +148,13 @@ def eliminarProducto(request,user_id, producto_idProducto):
 
 
 
+def reporteGanancias(request):
+    ventas = FacturaV.objects.values('idFacturaV').annotate(total=Sum('totall'))
+    reporte = []
+    for venta in ventas:
+        factura = FacturaV.objects.get(idFacturaV=venta['idFacturaV'])
+        reporte.append((factura.user.username, venta['total']))
+    return render(request, 'reporteGanancias.html', {'reporte': reporte})
 
 '''
 def categoria(request, user_id):

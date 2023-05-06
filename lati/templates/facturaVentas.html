@@ -21,6 +21,7 @@
             <p>Aca podras encontrar tus facturass</p>
             <h2></h2>
             {% if user.is_authenticated %}
+                
                 <a href="{% url 'agregarFacturaV' user.id %}"class="btn_get_started">Agregar Factura Venta</a>
                 {% for facturaV in facturasV %}
             <div v-for="facturaV in facturasV" class="col"> 

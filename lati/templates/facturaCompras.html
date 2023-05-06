@@ -21,6 +21,11 @@
             <p>Aca podras encontrar tus facturass</p>
             <h2></h2>
             {% if user.is_authenticated %}
+                <form action="{% url 'buscarFacturaC' %}" method="get">
+                    <label for="fecha">Fecha:</label>
+                    <input type="date" name="fecha" id="fecha">
+                    <button type="submit">Buscar</button>
+                </form>
                 <a href="{% url 'agregarFacturaC' user.id %}"class="btn_get_started">Agregar Factura Compra</a>
                 {% for facturaC in facturasC %}
             <div v-for="facturaC in facturasC" class="col"> 
