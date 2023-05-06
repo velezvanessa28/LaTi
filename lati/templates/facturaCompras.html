@@ -25,11 +25,11 @@
                 {% for facturaC in facturasC %}
             <div v-for="facturaC in facturasC" class="col"> 
                 <div class="card-body"> 
-                    <p class="card-text">Id producto: {{ facturaC.idFacturaC }} </p>
-                    <p class="card-text">Nombre: {{ facturaC.cantProduct }}</p>
-                    <p class="card-text">Descripción:{{ facturaC.costo}}</p>
-                    <p class="card-text">Cantidad: {{ facturaC.fecha}}</p> 
-                    <p class="card-text">Precio: {{ facturaC.nombreProveedor }}</p> 
+                    <p class="card-text">Id Factura: {{ facturaC.idFacturaC }} </p>
+                    <p class="card-text">Cantidad: {{ facturaC.cantProduct }}</p>
+                    <p class="card-text">Costo total: {{ facturaC.costo}}</p>
+                    <p class="card-text">Fecha compra: {{ facturaC.fecha}}</p> 
+                    <p class="card-text">Nombre proveedor: {{ facturaC.nombreProveedor }}</p> 
 
                 </div>
             </div>

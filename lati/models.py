@@ -25,9 +25,8 @@ class FacturaC(models.Model):
     costo =models.IntegerField()
     fecha = models.CharField(max_length=20)
     nombreProveedor = models.CharField(max_length=50)
+    user =models.ForeignKey(User,on_delete=models.CASCADE)
     
-    def __str__(self):
-        return "id Factura Compra: " +self.idFacturaC
 
     
 class FacturaV(models.Model):
@@ -38,7 +37,5 @@ class FacturaV(models.Model):
     nombreCliente = models.CharField(max_length=50)
     debe=models.BooleanField(default=False, null=True)
     cuanto=models.IntegerField(null=True)
-    
-    def __str__(self):
-        return "id Factura Venta: " + self.idFacturaV
+    user =models.ForeignKey(User,on_delete=models.CASCADE)
     

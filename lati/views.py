@@ -37,10 +37,22 @@ def agregarFacturaV(request, user_id):
             return render(request,'crearFacturaV.html',{'form':FacturaVForm(),'error':'bad datapassed in'})
 
 def actualizarFacturaV(request,user_id, facturaV_idFacturaV):
-    pass
+    facturaV = get_object_or_404(FacturaV,pk=facturaV_idFacturaV,user=request.user)
+    if request.method == 'GET':
+        form = FacturaVForm(instance=facturaV)
+        return render(request, 'actualizarFacturaV.html',{'facturaV': facturaV,'form':form})
+    else:
+        try:
+            form = FacturaVForm(request.POST,instance=facturaV)
+            form.save()
+            return redirect('facturaV', facturaV.user.id)
+        except ValueError:
+            return render(request,'actualizarFacturaV.html',{'facturav': facturaV,'form':form,'error':'Bad data in form'})
 
 def eliminarFacturaV(request,user_id, facturaV_idFacturaV):
-    pass
+    facturaV = get_object_or_404(FacturaV, pk=facturaV_idFacturaV,user=request.user)
+    facturaV.delete()
+    return redirect('facturaV', facturaV.user.id)
 
 
 
