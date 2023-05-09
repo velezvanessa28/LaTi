@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User 
-
+import datetime
 # Create your models here.
 
 class Categoria(models.Model):
@@ -23,7 +23,7 @@ class FacturaC(models.Model):
     idFacturaC = models.IntegerField(primary_key=True)
     cantProduct = models.IntegerField()
     costo =models.IntegerField()
-    fecha = models.CharField(max_length=20)
+    fecha = models.DateField(default=datetime.date.today)
     nombreProveedor = models.CharField(max_length=50)
     user =models.ForeignKey(User,on_delete=models.CASCADE)
     
@@ -35,6 +35,7 @@ class FacturaV(models.Model):
     totall =models.IntegerField()
     estado = models.CharField(max_length=50)
     nombreCliente = models.CharField(max_length=50)
+    fecha = models.DateField(default=datetime.date.today)
     debe=models.BooleanField(default=False, null=True)
     cuanto=models.IntegerField(null=True)
     user =models.ForeignKey(User,on_delete=models.CASCADE)

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div style="display:flex; ; justify-content: space-evenly;" >
+<form action="">
+    <div class="mb-3">
+        <label class="form-label">Busca reporte gastos por dia:</label>
+        <input type="date" name="searchFacturaC" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">
+        Generar reporte por dia
+    </button>
+</form>
+<br>
+<br>
+<form action="">
+    <div class="mb-3">
+        <label class="form-label">Busca reporte gastos por Mes:</label>
+        <input type="month" name="searchFacturaC" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">
+        Generar reporte por mes
+    </button>
+</form>
+
+<form action="">
+    <div class="mb-3">
+        <label for="yearInput" class="form-label">Busca reporte gastos por año:</label>
+        <input type="number" name="searchFacturaC" class="form-control" id="yearInput" step="1" min="1900" max="2100" />
+    </div>
+    <button type="submit" class="btn btn-primary">
+        Generar reporte por año
+    </button>
+</form>
+</div>
+
+<br>
+<center><p><b>Searching for: {{ searchTerm }}</b></p></center>
+
+
+<h1>Reporte de Gastos</h1>
+<div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Proveedor</th>
+                <th>Costo</th>
+                <th>ID factura gasto</th>
+                <th>Cantidad</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for facturaC in facturasC %}
+            <tr>
+                <td>{{ facturaC.fecha }}</td>
+                <td>{{ facturaC.nombreProveedor }}</td>
+                <td>{{ facturaC.costo }}</td>
+                <td>{{ facturaC.idFacturaC }}</td>
+                <td>{{ facturaC.cantProduct }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td><b>TOTAL GASTOS</b></td>
+                <td></td>
+                <td><b>{{ totalCostos }}$ pesos</b></td>
+                <td></td>
+                <td><b>{{ totalCantProd }} productos </b></td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+    
+{% comment %} ----------------------------------------------------------------------------- {% endcomment %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div style="width: 280x; height:350px; display: flex; justify-content: center; align-items: center;">
+    <canvas id="graficaGastos"></canvas>
+</div>
+<script>
+    const ctx = document.getElementById('graficaGastos');
+    
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{labels|safe}},
+            datasets: [{
+                label: 'Precio',
+                data: {{data|safe}},
+                backgroundColor: "#FF0000",
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+            title: {
+                display: true,
+                text: 'Grafica Gastos'
+            }
+        }
+        }
+    });
+</script>
+{% comment %} ---------------------------------------------------------------------------- {% endcomment %}
+
+{% endblock content%}

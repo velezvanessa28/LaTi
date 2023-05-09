@@ -69,11 +69,30 @@ def buscarFacturaC(request):
         return render(request, 'facturaCompras.html', {'facturas': facturas})
 
 
+def reporteGastos(request,user_id):
+    searchTerm = request.GET.get('searchFacturaC')
+    totalCantProd = 0
+    totalCostos=0
+    labels=[]
+    data=[]
+    if searchTerm:
+        facturasC = FacturaC.objects.filter(fecha__icontains=searchTerm)
+    else:
+        facturasC = FacturaC.objects.all()
+    
+    for factura in facturasC:
+        totalCantProd=totalCantProd+factura.cantProduct
+        totalCostos=totalCostos+factura.costo
+        labels.append(factura.idFacturaC)
+        data.append(factura.costo)
+        
+    return render(request,'reporteGastos.html',{'searchTerm':searchTerm,'facturasC':facturasC,'totalCantProd':totalCantProd,'totalCostos':totalCostos,'labels':labels,'data':data})
 
 '''Facturas Compra'''
 def facturaC(request,user_id):
     user = get_object_or_404(User,pk=user_id)
     facturasC = FacturaC.objects.all()
+
     return render(request,'facturaCompras.html',{'facturasC':facturasC})
 
 def agregarFacturaC(request, user_id):
