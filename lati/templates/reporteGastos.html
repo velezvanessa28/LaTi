@@ -77,6 +77,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div style="width: 280x; height:350px; display: flex; justify-content: center; align-items: center;">
     <canvas id="graficaGastos"></canvas>
+    <canvas id="graficaGastos2"></canvas>
 </div>
 <script>
     const ctx = document.getElementById('graficaGastos');
@@ -88,19 +89,82 @@
             datasets: [{
                 label: 'Precio',
                 data: {{data|safe}},
-                backgroundColor: "#FF0000",
+                backgroundColor: "#FFFFFF",
+                borderColor:"#000000",
                 borderWidth: 1
             }]
         },
         options: {
+            scales: {
+            x: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Id factura'
+                }
+            },
+            y: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Precio Factura'
+                }
+            }
+        },
             plugins: {
             title: {
                 display: true,
-                text: 'Grafica Gastos'
+                text: 'Grafica Gastos '
             }
         }
         }
     });
+    
+</script>
+
+
+<script>
+    const ctx2 = document.getElementById('graficaGastos2');
+    new Chart(ctx2,{
+  type: 'polarArea',
+  data: {
+            labels: {{labels|safe}},
+            datasets: [{
+                label: 'Precio',
+                data: {{data|safe}},
+                
+                borderWidth: 1
+            }]
+        },
+  options: {scales: {
+            x: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Id factura'
+                }
+            },
+            y: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Precio Factura'
+                }
+            }
+        },
+        
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Grafica Gastos'
+      }
+    }
+  },
+});
 </script>
 {% comment %} ---------------------------------------------------------------------------- {% endcomment %}
 
