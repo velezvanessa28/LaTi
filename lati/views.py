@@ -111,17 +111,29 @@ def agregarFacturaC(request, user_id):
             return render(request,'crearFacturaC.html',{'form':FacturaCForm(),'error':'bad datapassed in'})
         
 def actualizarFacturaC(request,user_id, facturaC_idFacturaC):
-    pass
+    facturaC = get_object_or_404(FacturaC,pk=facturaC_idFacturaC,user=request.user)
+    if request.method == 'GET':
+        form = FacturaCForm(instance=facturaC)
+        return render(request, 'actualizarFacturaC.html',{'facturaC': facturaC,'form':form})
+    else:
+        try:
+            form = FacturaCForm(request.POST,instance=facturaC)
+            form.save()
+            return redirect('facturaC', facturaC.user.id)
+        except ValueError:
+            return render(request,'actualizarFacturaC.html',{'facturaC': facturaC,'form':form,'error':'Bad data in form'})
 
 def eliminarFacturaC(request,user_id, facturaC_idFacturaC):
-    pass
+    facturaC = get_object_or_404(FacturaC, pk=facturaC_idFacturaC,user=request.user)
+    facturaC.delete()
+    return redirect('facturaC', facturaC.user.id)
 
 '''Productos'''
 def inventario(request, user_id):
     user = get_object_or_404(User,pk=user_id)
-
-        
     return render(request, 'inventario.html')
+
+
 def producto(request, user_id):
     user = get_object_or_404(User,pk=user_id)
     productos = Producto.objects.filter(user = user)     
@@ -134,7 +146,7 @@ def agregarProducto(request, user_id):
         return render(request, 'agregarProducto.html',{'form':ProductoForm(), 'user':user})
     else:
         try:    
-            form = ProductoForm(request.POST)
+            form = ProductoForm(request.POST,request.FILES)
             newProducto = form.save(commit=False)
             newProducto.user = request.user
             newProducto.user = user
@@ -175,29 +187,3 @@ def reporteGanancias(request):
         reporte.append((factura.user.username, venta['total']))
     return render(request, 'reporteGanancias.html', {'reporte': reporte})
 
-'''
-def categoria(request, user_id):
-    user = get_object_or_404(User,pk=user_id)
-    categorias = Categoria.objects.filter(user = user)     
-    return render(request, 'categoria.html', {'categorias': categorias})
-
-
-
-def agregarCategoria(request, user_id):
-    user = get_object_or_404(User,pk=user_id)
-    if request.method == 'GET':
-        return render(request, 'agregarCategoria.html',{'form':CategoriaForm(), 'user':user})
-    else:
-        try:    
-            form = CategoriaForm(request.POST)
-            newCategoria = form.save(commit=False)
-            newCategoria.user = request.user
-            newCategoria.user = user
-            newCategoria.save()
-            return redirect('categoria/', newCategoria.user.id)
-        except ValueError:
-            return render(request,'agregarCategoria.html',{'form':ProductoForm(),'error':'bad data passed in'})
-            
-            
-            '''
-            

@@ -38,6 +38,8 @@
                     <p class="card-text">Costo total: {{ facturaC.costo}}</p>
                     <p class="card-text">Fecha compra: {{ facturaC.fecha}}</p> 
                     <p class="card-text">Nombre proveedor: {{ facturaC.nombreProveedor }}</p> 
+                    <a class="btn btn-primary me-2" href="{% url 'actualizarFacturaC' user.id facturaC.idFacturaC %}">Actualizar</a>
+                    <a class="btn btn-danger" href="{% url 'eliminarFacturaC' user.id facturaC.idFacturaC %}">Eliminar</a> 
 
                 </div>
             </div>
