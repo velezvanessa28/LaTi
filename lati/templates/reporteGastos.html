@@ -37,7 +37,7 @@
 <br>
 <center><p><b>Searching for: {{ searchTerm }}</b></p></center>
 
-
+{% comment %} Primer comportamiento: Visualización de la tabla  {% endcomment %}
 <h1>Reporte de Gastos</h1>
 <div class="table-responsive">
     <table class="table table-hover">
@@ -73,23 +73,26 @@
     </div>
 
     
-{% comment %} ----------------------------------------------------------------------------- {% endcomment %}
+{% comment %} --Se le agrega un comportamiento a la tabla: visualizar grafica por factura con cambio de color----- {% endcomment %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div style="width: 280x; height:350px; display: flex; justify-content: center; align-items: center;">
     <canvas id="graficaGastos"></canvas>
     <canvas id="graficaGastos2"></canvas>
 </div>
+<button type="button" class="btn btn-danger" id="botonRojo">Cambio Color Rojo</button>
+<button type="button" class="btn btn-outline-secondary"  id="botonBlanco">Cambio Color Blanco</button>
 <script>
     const ctx = document.getElementById('graficaGastos');
-    
-    new Chart(ctx, {
+    let colorsito="#FFFFFF";
+
+    const grafica=new Chart(ctx, {
         type: 'bar',
         data: {
             labels: {{labels|safe}},
             datasets: [{
                 label: 'Precio',
                 data: {{data|safe}},
-                backgroundColor: "#FFFFFF",
+                backgroundColor: colorsito,
                 borderColor:"#000000",
                 borderWidth: 1
             }]
@@ -120,9 +123,26 @@
         }
     });
     
+    document.getElementById('botonRojo').addEventListener('click', cambiarRojo);
+    document.getElementById('botonBlanco').addEventListener('click', cambiarBlanco);
+    
+    function cambiarRojo(){
+        colorsito="#FF0000";
+        
+        grafica.data.datasets[0].backgroundColor = colorsito;
+        grafica.update();
+    }
+
+    function cambiarBlanco(){
+        colorsito="#FFFFFF";
+        
+        grafica.data.datasets[0].backgroundColor = colorsito;
+        grafica.update();
+    }
 </script>
 
 
+{% comment %} Se le agrega otro comportamiento a la tabla: visualizar grafica de torta con total del precio de todas las facturas{% endcomment %}
 <script>
     const ctx2 = document.getElementById('graficaGastos2');
     new Chart(ctx2,{
