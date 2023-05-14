@@ -52,7 +52,8 @@ urlpatterns = [
     path('buscarFacturaC/', appViews.buscarFacturaC, name='buscarFacturaC'),
     
     path('reporteGanancias/', appViews.reporteGanancias, name='reporteGanancias'),
-    path('usuario/<int:user_id>/reporteGanancias/', appViews.reporteGastos, name='reporteGastos'),
+    path('usuario/<int:user_id>/reporteGastos/', appViews.reporteGastos, name='reporteGastos'),
+    path('usuario/<int:user_id>/reporteInventario/', appViews.reporteInventario, name='reporteInventario'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

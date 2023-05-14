@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% comment %} Primer comportamiento: Visualización de la tabla  {% endcomment %}
+<h1>Reporte Inventario</h1>
+<h5>Aqui puedes visualizar todo el inventario de los productos que tienes</h5>
+<br>
+<hr>
+<div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Peso</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for producto in productos %}
+            <tr>
+                <td>{{ producto.idProducto }}</td>
+                <td>{{ producto.nombreProducto }}</td>
+                <td>{{ producto.peso }}</td>
+                <td>{{ producto.cantidadProducto }}</td>
+                <td>{{ producto.precioUnit }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td><b>TOTAL PRODUCTOS</b></td>
+                <td></td>
+                <td></td>
+                <td><b>{{ totalProductos }}</b> productos</td>
+                <td></td>
+            </tr> 
+        </tbody>
+    </table>
+    </div>
+
+    <div style="width: 280x; height:350px; display: flex; justify-content: center; align-items: center;">
+        <canvas id="graficaInventario"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx2 = document.getElementById('graficaInventario');
+        new Chart(ctx2,{
+      type: 'polarArea',
+      data: {
+                labels: {{labels|safe}},
+                datasets: [{
+                    label: 'Cantidad Producto',
+                    data: {{data|safe}},
+                    
+                    borderWidth: 1
+                }]
+            },
+      options: {scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Id Producto'
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Cant producto'
+                    }
+                }
+            },
+            
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Grafica Inventario'
+          }
+        }
+      },
+    });
+    </script>
+
+{% endblock content %}

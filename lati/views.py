@@ -16,7 +16,7 @@ def home(request):
 '''Facturas Venta'''
 def facturaV(request, user_id):
     user = get_object_or_404(User,pk=user_id)
-    facturasV = FacturaV.objects.all()
+    facturasV = FacturaV.objects.filter(user=user)
     return render(request,'facturaVentas.html',{'facturasV':facturasV})
 
 def agregarFacturaV(request, user_id):
@@ -69,29 +69,10 @@ def buscarFacturaC(request):
         return render(request, 'facturaCompras.html', {'facturas': facturas})
 
 
-def reporteGastos(request,user_id):
-    searchTerm = request.GET.get('searchFacturaC')
-    totalCantProd = 0
-    totalCostos=0
-    labels=[]
-    data=[]
-    if searchTerm:
-        facturasC = FacturaC.objects.filter(fecha__icontains=searchTerm)
-    else:
-        facturasC = FacturaC.objects.all()
-    
-    for factura in facturasC:
-        totalCantProd=totalCantProd+factura.cantProduct
-        totalCostos=totalCostos+factura.costo
-        labels.append(factura.idFacturaC)
-        data.append(factura.costo)
-        
-    return render(request,'reporteGastos.html',{'searchTerm':searchTerm,'facturasC':facturasC,'totalCantProd':totalCantProd,'totalCostos':totalCostos,'labels':labels,'data':data})
-
 '''Facturas Compra'''
 def facturaC(request,user_id):
     user = get_object_or_404(User,pk=user_id)
-    facturasC = FacturaC.objects.all()
+    facturasC = FacturaC.objects.filter(user=user)
 
     return render(request,'facturaCompras.html',{'facturasC':facturasC})
 
@@ -177,7 +158,21 @@ def eliminarProducto(request,user_id, producto_idProducto):
     producto.delete()
     return redirect('../inventario/', producto.user.id)
 
-
+'''Reportes'''
+def reporteInventario(request,user_id):
+    user = get_object_or_404(User,pk=user_id)
+    productos = Producto.objects.filter(user = user)    
+    
+    totalProductos=0
+    labels=[]
+    data=[]
+    
+    for producto in productos:
+        totalProductos=totalProductos+producto.cantidadProducto
+        labels.append(producto.idProducto)
+        data.append(producto.cantidadProducto)
+        
+    return render(request, 'reporteInventario.html', {'productos': productos,'data':data,'labels':labels,'totalProductos':totalProductos})
 
 def reporteGanancias(request):
     ventas = FacturaV.objects.values('idFacturaV').annotate(total=Sum('totall'))
@@ -187,3 +182,22 @@ def reporteGanancias(request):
         reporte.append((factura.user.username, venta['total']))
     return render(request, 'reporteGanancias.html', {'reporte': reporte})
 
+def reporteGastos(request,user_id):
+    searchTerm = request.GET.get('searchFacturaC')
+    user = get_object_or_404(User,pk=user_id)
+    totalCantProd = 0
+    totalCostos=0
+    labels=[]
+    data=[]
+    if searchTerm:
+        facturasC = FacturaC.objects.filter(fecha__icontains=searchTerm,user=user)
+    else:
+        facturasC = FacturaC.objects.filter(user=user)
+    
+    for factura in facturasC:
+        totalCantProd=totalCantProd+factura.cantProduct
+        totalCostos=totalCostos+factura.costo
+        labels.append(factura.idFacturaC)
+        data.append(factura.costo)
+        
+    return render(request,'reporteGastos.html',{'searchTerm':searchTerm,'facturasC':facturasC,'totalCantProd':totalCantProd,'totalCostos':totalCostos,'labels':labels,'data':data})
