@@ -45,7 +45,7 @@
         {% if user.is_authenticated %}
         <a class="nav-link" href="{% url 'reporteInventario' user.id %}">Reporte Inventario </a>
         <a class="nav-link" href="{% url 'reporteGastos' user.id %}">Reporte Gastos </a>
-        <a class="nav-link" href="{% url 'reporteGanancias' %}">Reporte Ganancias </a>
+        <a class="nav-link" href="{% url 'reporteGanancias' user.id %}">Reporte Ganancias </a>
         <a class="nav-link" href="{% url 'facturaV' user.id%}">Factura Ventas </a>
         <a class="nav-link" href="{% url 'facturaC' user.id%}">Factura Compras </a>
 

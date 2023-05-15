@@ -55,18 +55,14 @@ def eliminarFacturaV(request,user_id, facturaV_idFacturaV):
 
 
 
-def buscarFacturaC(request):
-    if request.method == 'GET':
-        fecha = request.GET.get('fecha')
-        if fecha:
-            try:
-                fecha = datetime.strptime(fecha, '%d/%m/%Y').date()
-                facturas = FacturaC.objects.filter(fecha=fecha)
-            except ValueError:
-                facturas = FacturaC.objects.none()
-        else:
-            facturas = FacturaC.objects.all()
-        return render(request, 'facturaCompras.html', {'facturas': facturas})
+def searchFacturaC(request, user_id):
+    searchTerm = request.GET.get('searchFacturaC')
+    user = get_object_or_404(User,pk=user_id)
+    if searchTerm:
+        facturasC = FacturaC.objects.filter(fecha__icontains=searchTerm,user=user)
+    else:
+        facturasC = FacturaC.objects.filter(user=user)
+    return render(request,'facturaCompras.html',{'searchTerm':searchTerm,'facturasC':facturasC})
 
 
 '''Facturas Compra'''
@@ -191,13 +187,25 @@ def reporteInventario(request,user_id):
         
     return render(request, 'reporteInventario.html', {'productos': productos,'data':data,'labels':labels,'totalProductos':totalProductos})
 
-def reporteGanancias(request):
-    ventas = FacturaV.objects.values('idFacturaV').annotate(total=Sum('totall'))
-    reporte = []
-    for venta in ventas:
-        factura = FacturaV.objects.get(idFacturaV=venta['idFacturaV'])
-        reporte.append((factura.user.username, venta['total']))
-    return render(request, 'reporteGanancias.html', {'reporte': reporte})
+def reporteGanancias(request, user_id):
+    searchTerm = request.GET.get('searchFacturaV')
+    user = get_object_or_404(User,pk=user_id)
+    totalCantProd = 0
+    totalCostos=0
+    labels=[]
+    data=[]
+    if searchTerm:
+        facturasV = FacturaV.objects.filter(fecha__icontains=searchTerm,user=user)
+    else:
+        facturasV = FacturaV.objects.filter(user=user)
+    
+    for factura in facturasV:
+        totalCantProd=totalCantProd+factura.cantProduct
+        totalCostos=totalCostos+factura.totall
+        labels.append(factura.idFacturaV)
+        data.append(factura.totall)
+        
+    return render(request,'reporteGanancias.html',{'searchTerm':searchTerm,'facturasV':facturasV,'totalCantProd':totalCantProd,'totalCostos':totalCostos,'labels':labels,'data':data})
 
 def reporteGastos(request,user_id):
     searchTerm = request.GET.get('searchFacturaC')

@@ -21,11 +21,15 @@
             <p>Aca podras encontrar tus facturas</p>
             <h2></h2>
             {% if user.is_authenticated %}
-                <form action="{% url 'buscarFacturaC' %}" method="get">
-                    <label for="fecha">Fecha:</label>
-                    <input type="date" name="fecha" id="fecha">
-                    <button type="submit">Buscar</button>
-                </form> 
+                <form action="">
+                    <div class="mb-3">
+                        <label class="form-label">Busca ffactura por fecha:</label>
+                        <input type="date" name="searchFacturaC" class="form-control" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        Buscar
+                    </button>
+                </form>
 
 
 

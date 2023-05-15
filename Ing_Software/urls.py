@@ -49,9 +49,9 @@ urlpatterns = [
     
     path('usuario/<int:user_id>/facturaC/actualizar/<int:facturaC_idFacturaC>/', appViews.actualizarFacturaC,name='actualizarFacturaC'),
     path('usuario/<int:user_id>/facturaC/eliminar/<int:facturaC_idFacturaC>/', appViews.eliminarFacturaC,name='eliminarFacturaC'),
-    path('buscarFacturaC/', appViews.buscarFacturaC, name='buscarFacturaC'),
+
     
-    path('reporteGanancias/', appViews.reporteGanancias, name='reporteGanancias'),
+    path('usuario/<int:user_id>/reporteGanancias/', appViews.reporteGanancias, name='reporteGanancias'),
     path('usuario/<int:user_id>/reporteGastos/', appViews.reporteGastos, name='reporteGastos'),
     path('usuario/<int:user_id>/reporteInventario/', appViews.reporteInventario, name='reporteInventario'),
 ]

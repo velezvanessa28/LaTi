@@ -1,34 +1,191 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Reporte de Ganancias</title>
-  </head>
-  <body>
-    {% extends 'base.html' %}
-    {% block content %}
-    <h1>Reporte de Ganancias</h1>
-    <table>
+{% extends 'base.html' %}
+{% block content %}
+
+<div style="display:flex; ; justify-content: space-evenly;" >
+<form action="">
+    <div class="mb-3">
+        <label class="form-label">Busca reporte ganancias por dia:</label>
+        <input type="date" name="searchFacturaV" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">
+        Generar reporte por dia
+    </button>
+</form>
+<br>
+<br>
+<form action="">
+    <div class="mb-3">
+        <label class="form-label">Busca reporte de ganancias por Mes:</label>
+        <input type="month" name="searchFacturaV" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">
+        Generar reporte por mes
+    </button>
+</form>
+
+<form action="">
+    <div class="mb-3">
+        <label for="yearInput" class="form-label">Busca reporte ganancias por año:</label>
+        <input type="number" name="searchFacturaV" class="form-control" id="yearInput" step="1" min="1900" max="2100" />
+    </div>
+    <button type="submit" class="btn btn-primary">
+        Generar reporte por año
+    </button>
+</form>
+</div>
+
+<br>
+<center><p><b>Searching for: {{ searchTerm }}</b></p></center>
+
+{% comment %} Primer comportamiento: Visualización de la tabla  {% endcomment %}
+<h1>Reporte de Ganancias</h1>
+<div class="table-responsive">
+    <table class="table table-hover">
       <thead>
-        <tr>
-          <th>Fecha</th>
-          <th>Usuario</th>
-          <th>Total de Ventas</th>
-          <th>Costo de Productos Vendidos</th>
-          <th>Ganancias</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for venta in ventas %}
-        <tr>
-          <td>{{ venta.fecha }}</td>
-          <td>{{ venta.user }}</td>
-          <td>{{ venta.total_ventas }}</td>
-          <td>{{ venta.costo_productos }}</td>
-          <td>{{ venta.ganancias }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
+            <tr>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Total</th>
+                <th>ID factura venta</th>
+                <th>Cantidad</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for facturaV in facturasV %}
+            <tr>
+                <td>{{ facturaV.fecha }}</td>
+                <td>{{ facturaV.nombreCliente }}</td>
+                <td>{{ facturaV.totall }}</td>
+                <td>{{ facturaV.idFacturaV }}</td>
+                <td>{{ facturaV.cantProduct }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td><b>TOTAL GANANCIAS</b></td>
+                <td></td>
+                <td><b>{{ totalCostos }}$ pesos</b></td>
+                <td></td>
+                <td><b>{{ totalCantProd }} productos </b></td>
+            </tr>
+        </tbody>
     </table>
-    {% endblock content%}
-  </body>
-</html>
+    </div>
+
+    
+{% comment %} --Se le agrega un comportamiento a la tabla: visualizar grafica por factura con cambio de color----- {% endcomment %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div style="width: 280x; height:350px; display: flex; justify-content: center; align-items: center;">
+    <canvas id="graficaGanancias"></canvas>
+    <canvas id="graficaGanancias2"></canvas>
+</div>
+<button type="button" class="btn btn-danger" id="botonRojo">Cambio Color Rojo</button>
+<button type="button" class="btn btn-outline-secondary"  id="botonBlanco">Cambio Color Blanco</button>
+<script>
+    const ctx = document.getElementById('graficaGanancias');
+    let colorsito="#FFFFFF";
+
+    const grafica=new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{labels|safe}},
+            datasets: [{
+                label: 'Precio',
+                data: {{data|safe}},
+                backgroundColor: colorsito,
+                borderColor:"#000000",
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+            x: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Id factura'
+                }
+            },
+            y: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Precio Factura'
+                }
+            }
+        },
+            plugins: {
+            title: {
+                display: true,
+                text: 'Grafica Ganancias '
+            }
+        }
+        }
+    });
+    
+    document.getElementById('botonRojo').addEventListener('click', cambiarRojo);
+    document.getElementById('botonBlanco').addEventListener('click', cambiarBlanco);
+    
+    function cambiarRojo(){
+        colorsito="#FF0000";
+        
+        grafica.data.datasets[0].backgroundColor = colorsito;
+        grafica.update();
+    }
+
+    function cambiarBlanco(){
+        colorsito="#FFFFFF";
+        
+        grafica.data.datasets[0].backgroundColor = colorsito;
+        grafica.update();
+    }
+</script>
+
+
+{% comment %} Se le agrega otro comportamiento a la tabla: visualizar grafica de torta con total del precio de todas las facturas{% endcomment %}
+<script>
+    const ctx2 = document.getElementById('graficaGanancias2');
+    new Chart(ctx2,{
+  type: 'polarArea',
+  data: {
+            labels: {{labels|safe}},
+            datasets: [{
+                label: 'Precio',
+                data: {{data|safe}},
+                
+                borderWidth: 1
+            }]
+        },
+  options: {scales: {
+            x: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Id factura'
+                }
+            },
+            y: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Precio Factura'
+                }
+            }
+        },
+        
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Grafica Ganancias'
+      }
+    }
+  },
+});
+</script>
+{% comment %} ---------------------------------------------------------------------------- {% endcomment %}
+
+{% endblock content%}
