@@ -123,11 +123,21 @@ def producto(request, user_id):
 
 def agregarProducto(request, user_id):
     user = get_object_or_404(User,pk=user_id)
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, request.FILES)
+        if form.is_valid():
+            producto = form.save(commit=False)
+            producto.user = request.user  # Asigna el usuario actual si es necesario
+            producto.save()
+            return redirect('inventario/', producto.user.id)
+    else:
+        form = ProductoForm()
+    return render(request, 'agregarProducto.html', {'form': ProductoForm})
     if request.method == 'GET':
         return render(request, 'agregarProducto.html',{'form':ProductoForm(), 'user':user})
     else:
         try:    
-            form = ProductoForm(request.POST,request.FILES)
+            form = ProductoForm(request.POST, request.FILES)
             newProducto = form.save(commit=False)
             newProducto.user = request.user
             newProducto.user = user
@@ -136,10 +146,18 @@ def agregarProducto(request, user_id):
         except ValueError:
             return render(request,'agregarProducto.html',{'form':ProductoForm(),'error':'bad data passed in'})
         
-        
-        
 def actualizarProducto(request,user_id, producto_idProducto):
     producto = get_object_or_404(Producto,pk=producto_idProducto,user=request.user)
+    
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, request.FILES, instance=producto)
+        if form.is_valid():
+            form.save()
+            return redirect('../inventario/', producto.user.id)
+    else:
+        form = ProductoForm(instance=producto)
+    
+    return render(request,'actualizarProducto.html',{'producto': producto,'form':form,'error':'Bad data in form'})
     if request.method == 'GET':
         form = ProductoForm(instance=producto)
         return render(request, 'actualizarProducto.html',{'producto': producto,'form':form})
@@ -150,7 +168,6 @@ def actualizarProducto(request,user_id, producto_idProducto):
             return redirect('../inventario/', producto.user.id)
         except ValueError:
             return render(request,'actualizarProducto.html',{'producto': producto,'form':form,'error':'Bad data in form'})
-        
         
 
 def eliminarProducto(request,user_id, producto_idProducto):

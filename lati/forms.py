@@ -6,14 +6,14 @@ class ProductoForm(ModelForm):
     
     class Meta:
         model = Producto
-        fields = ['idProducto','nombreProducto', 'descripcion', 'cantidadProducto','precioUnit', 'foto', 'peso']
+        fields = ['idProducto','nombreProducto', 'descripcion', 'cantidadProducto','precioUnit', 'image', 'peso']
         labels = {
             'idProducto': 'ID del producto',
             'nombreProducto': 'Nombre del producto',
             'descripcion': 'Descripcion',
             'cantidadProducto': 'Cantidad',
             'precioUnit': 'Precio unitario',
-            'foto': 'Foto',
+            'image': 'Foto',
             'peso': 'Peso',
 
         }
@@ -23,11 +23,11 @@ class ProductoForm(ModelForm):
             'descripcion': forms.TextInput(attrs={'class': 'form-control'}),
             'cantidadProducto': forms.NumberInput(attrs={'class': 'form-control'}),
             'precioUnit': forms.NumberInput(attrs={'class': 'form-control'}),
-            'foto': forms.FileInput(attrs={'class': 'form-control'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
             'peso': forms.NumberInput(attrs={'class': 'form-control'}),
 
         }
-    foto = forms.ImageField(required=False)
+    image = forms.ImageField(required=False)
         
     
     def __init__(self, *args, **kwargs):
@@ -38,7 +38,7 @@ class ProductoForm(ModelForm):
         self.fields['cantidadProducto'].widget.attrs.update({'class': 'form-control'})
         self.fields['precioUnit'].widget.attrs.update({'class': 'form-control'})
         self.fields['peso'].widget.attrs.update({'class': 'form-control'})
-        self.fields['foto'].widget.attrs.update({'class': 'form-control-file'})
+        self.fields['image'].widget.attrs.update({'class': 'form-control-file'})
         
 class FacturaVForm(ModelForm):
     def __init__(self, *args, **kwargs):

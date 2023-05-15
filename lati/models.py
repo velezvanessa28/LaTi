@@ -13,7 +13,7 @@ class Producto(models.Model):
     descripcion =   models.CharField(max_length=100)
     cantidadProducto = models.PositiveIntegerField()
     precioUnit = models.PositiveIntegerField()
-    foto = models.ImageField(upload_to='media/lati/images/', null=True)
+    image = models.ImageField(upload_to='lati/images/', null=True)
     peso = models.FloatField()
     user =models.ForeignKey(User,on_delete=models.CASCADE)
     
