@@ -23,10 +23,8 @@
                 {% for producto in productos %}
                 {% if user.is_authenticated and user == producto.user %}
             <div v-for="producto in productos" class="col"> 
-                <div class="card"> 
-                    <img class="card-img-top" src="{{ producto.foto.url }}" style="height:200px; width: 300px; display: flex; align-items: center; justify-content: center; margin: 0 auto"/> 
-                <div class="card-body"> 
-                    <p class="card-text">Id producto: {{ producto.idProducto }}</p>
+
+                    <p class="card-text">Id del producto: {{ producto.idProducto }}</p>
                     <p class="card-text">Nombre: {{ producto.nombreProducto }}</p>
                     <p class="card-text">Descripción: {{ producto.descripcion }}</p>
                     <p class="card-text">Cantidad: {{ producto.cantidadProducto }}</p> 
