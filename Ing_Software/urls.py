@@ -44,6 +44,7 @@ urlpatterns = [
     path('usuario/<int:user_id>/facturaC/', appViews.facturaC,name='facturaC'),
     path('usuario/<int:user_id>/facturaV/', appViews.facturaV,name='facturaV'),
     
+    
     path('usuario/<int:user_id>/facturaV/actualizar/<int:facturaV_idFacturaV>/', appViews.actualizarFacturaV,name='actualizarFacturaV'),
     path('usuario/<int:user_id>/facturaV/eliminar/<int:facturaV_idFacturaV>/', appViews.eliminarFacturaV,name='eliminarFacturaV'),
     

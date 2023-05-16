@@ -15,9 +15,14 @@ def home(request):
 
 '''Facturas Venta'''
 def facturaV(request, user_id):
+    searchTerm2 = request.GET.get('busquedafe')
     user = get_object_or_404(User,pk=user_id)
-    facturasV = FacturaV.objects.filter(user=user)
-    return render(request,'facturaVentas.html',{'facturasV':facturasV})
+    if searchTerm2:
+        facturasV = FacturaV.objects.filter(fecha__icontains=searchTerm2,user=user)
+    else:
+        facturasV = FacturaV.objects.filter(user=user)
+    return render(request,'facturaVentas.html',{'searchTerm2':searchTerm2,'facturasV':facturasV})
+
 
 def agregarFacturaV(request, user_id):
     user = get_object_or_404(User,pk=user_id)
@@ -55,22 +60,22 @@ def eliminarFacturaV(request,user_id, facturaV_idFacturaV):
 
 
 
-def searchFacturaC(request, user_id):
-    searchTerm = request.GET.get('searchFacturaC')
+def facturaC(request, user_id):
+    searchTerm = request.GET.get('busquedaproveedor')
+    searchTerm1 = request.GET.get('searchFacturaC')
     user = get_object_or_404(User,pk=user_id)
     if searchTerm:
-        facturasC = FacturaC.objects.filter(fecha__icontains=searchTerm,user=user)
+        facturasC = FacturaC.objects.filter(nombreProveedor__icontains=searchTerm,user=user)
+    elif searchTerm1:
+        facturasC = FacturaC.objects.filter(fecha__icontains=searchTerm1,user=user)
     else:
         facturasC = FacturaC.objects.filter(user=user)
-    return render(request,'facturaCompras.html',{'searchTerm':searchTerm,'facturasC':facturasC})
+
+    return render(request,'facturaCompras.html',{'searchTerm':searchTerm,'searchTerm1':searchTerm1,'facturasC':facturasC})
 
 
 '''Facturas Compra'''
-def facturaC(request,user_id):
-    user = get_object_or_404(User,pk=user_id)
-    facturasC = FacturaC.objects.filter(user=user)
 
-    return render(request,'facturaCompras.html',{'facturasC':facturasC})
 
 def agregarFacturaC(request, user_id):
     user = get_object_or_404(User,pk=user_id)

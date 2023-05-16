@@ -18,19 +18,30 @@
     <section id="hero" class="d-flex align-items-center">
         <div class="container text-center">
             <h1>Bienvenido a Facturas</h1>
-            <p>Aca podras encontrar tus facturas</p>
+            <p>Aca podras encontrar y generar tus facturas de venta </p>
             <h2></h2>
             {% if user.is_authenticated %}
+            
+            <form action="">
+                <div class="mb-3">
+                    <label for="busquedaproveedor" class="form-label">
+                        Busqueda por fecha 
+                    </label>
+                    <input type="date" class="form-control" name="busquedafe" />
+                </div>
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </form>
                 
                 <a href="{% url 'agregarFacturaV' user.id %}"class="btn_get_started">Agregar Factura Venta</a>
                 {% for facturaV in facturasV %}
             <div v-for="facturaV in facturasV" class="col"> 
                 <div class="card-body"> 
                     <p class="card-text">Id factura: {{ facturaV.idFacturaV }}</p>
-                    <p class="card-text">Cantidad: {{ facturaV.cantProduct }}</p>
+                    <p class="card-text">Cantidad: {{ facturaV.cantProduct1 }}</p>
                     <p class="card-text">Total: {{ facturaV.totall}}</p>
                     <p class="card-text">Estado: {{ facturaV.estado}}</p> 
                     <p class="card-text">Nombre cliente: {{ facturaV.nombreCliente }}</p> 
+                    <p class="card-text">Fecha de venta: {{ facturaV.fecha}}</p>
                     <p class="card-text">Debe? {{ facturaV.debe }}</p> 
                     <p class="card-text">Cuanto? {{ facturaV.cuanto }}</p> 
                     <a class="btn btn-primary me-2" href="{% url 'actualizarFacturaV' user.id facturaV.idFacturaV %}">Actualizar</a>

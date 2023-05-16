@@ -31,7 +31,7 @@ class FacturaC(models.Model):
     
 class FacturaV(models.Model):
     idFacturaV = models.PositiveIntegerField(primary_key=True)
-    cantProduct = models.PositiveIntegerField()
+    cantProduct1 = models.PositiveIntegerField()
     totall =models.PositiveIntegerField()
     estado = models.CharField(max_length=50)
     nombreCliente = models.CharField(max_length=50)

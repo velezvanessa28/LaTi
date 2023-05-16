@@ -18,20 +18,29 @@
     <section id="hero" class="d-flex align-items-center">
         <div class="container text-center">
             <h1>Bienvenido a Facturas</h1>
-            <p>Aca podras encontrar tus facturas</p>
+            <p>Aqui podras encontrar y generar tus facturas de compra a proveedores</p>
             <h2></h2>
             {% if user.is_authenticated %}
                 <form action="">
                     <div class="mb-3">
-                        <label class="form-label">Busca ffactura por fecha:</label>
-                        <input type="date" name="searchFacturaC" class="form-control" />
+                        <label for="busquedaproveedor" class="form-label">
+                            Busqueda por proveedor
+                        </label>
+                        <input type="text" class="form-control" name="busquedaproveedor" />
                     </div>
-                    <button type="submit" class="btn btn-primary">
-                        Buscar
-                    </button>
+                    <button type="submit" class="btn btn-primary">Buscar</button>
                 </form>
-
-
+                <form action="">
+                <div class="mb-3">
+                
+                <label class="form-label">Busca factura por fecha:</label>
+                <input type="date" name="searchFacturaC" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">
+                Buscar
+            </button>
+            </form>
+                
 
                 <a href="{% url 'agregarFacturaC' user.id %}"class="btn_get_started">Agregar Factura Compra</a>
                 {% for facturaC in facturasC %}

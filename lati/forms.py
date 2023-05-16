@@ -45,7 +45,7 @@ class FacturaVForm(ModelForm):
         super(ModelForm, self).__init__(*args,**kwargs)
         self.fields['idFacturaV'].widget.attrs.update({'class': 'form-control'})
         self.fields['nombreCliente'].widget.attrs.update({'class': 'form-control'})
-        self.fields['cantProduct'].widget.attrs.update({'class': 'form-control'})
+        self.fields['cantProduct1'].widget.attrs.update({'class': 'form-control'})
         self.fields['totall'].widget.attrs.update({'class': 'form-control'})
         self.fields['fecha'].widget.attrs.update({'class': 'form-control'})
         self.fields['estado'].widget.attrs.update({'class': 'form-control'})
@@ -54,9 +54,9 @@ class FacturaVForm(ModelForm):
         
     class Meta:
         model = FacturaV
-        fields = ['idFacturaV','cantProduct','totall','estado','fecha','nombreCliente','debe','cuanto']
+        fields = ['idFacturaV','cantProduct1','totall','estado','fecha','nombreCliente','debe','cuanto']
         labels = {'idFacturaV': 'ID Factura',
-            'cantProduct': 'Cantidad del producto',
+            'cantProduct1': 'Cantidad del producto',
             'totall': 'Precio total factura',
             'estado': 'Estado de la factura',
             'fecha': 'Fecha de la factura',
@@ -68,7 +68,7 @@ class FacturaVForm(ModelForm):
         widgets = {
             'nombreCliente': forms.TextInput(attrs={'class': 'form-control'}),
             'idFacturaV': forms.TextInput(attrs={'class': 'form-control'}),
-            'cantProduct': forms.NumberInput(attrs={'class': 'form-control'}),
+            'cantProduct1': forms.NumberInput(attrs={'class': 'form-control'}),
             'totall': forms.NumberInput(attrs={'class': 'form-control'}),
             'fecha': forms.TextInput(attrs={'class': 'form-control'}), 
             'estado': forms.TextInput(attrs={'class': 'form-control'}), 
