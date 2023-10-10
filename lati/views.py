@@ -205,7 +205,7 @@ def reporteGanancias(request, user_id):
         facturasV = FacturaV.objects.filter(user=user)
     
     for factura in facturasV:
-        totalCantProd=totalCantProd+factura.cantProduct
+        totalCantProd=totalCantProd+factura.cantProduct1
         totalCostos=totalCostos+factura.totall
         labels.append(factura.idFacturaV)
         data.append(factura.totall)
